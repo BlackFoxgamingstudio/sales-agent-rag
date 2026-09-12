@@ -1,0 +1,39 @@
+version: "3.9"
+# Sovereign Sales Agent RAG — docker-compose
+# Usage: docker-compose up --build
+
+services:
+  sales-agent-rag:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: sovereign-sales-agent-rag:latest
+    container_name: sovereign-sales-agent-rag
+    restart: unless-stopped
+    ports:
+      - "8802:8802"
+    environment:
+      SBB_VECTOR_DB_URL: ${SBB_VECTOR_DB_URL}
+      SBB_LLM_API_KEY: ${SBB_LLM_API_KEY}
+      SBB_CRM_API_KEY: ${SBB_CRM_API_KEY}
+      SBB_PRODUCT_CATALOG_PATH: ${SBB_PRODUCT_CATALOG_PATH}
+      SBB_API_KEY: ${SBB_API_KEY:-change-me}
+      SBB_N8N_EVENT_BUS_URL: ${SBB_N8N_EVENT_BUS_URL:-http://host.docker.internal:5678/webhook/event-bus}
+      SERVICE_PORT: 8802
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    volumes:
+      - ./.data:/app/.data:rw
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8802/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - sbb-platform
+
+networks:
+  sbb-platform:
+    external: true
+    name: sbb-platform-network
