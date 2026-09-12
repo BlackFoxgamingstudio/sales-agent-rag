@@ -2,6 +2,7 @@
 
 [![PyPI Version](https://img.shields.io/badge/pypi-v1.0.0-blue.svg)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/pytest-passing_100%25-brightgreen.svg)](tests/test_solution.py)
+[![CI](https://github.com/BlackFoxgamingstudio/sales-agent-rag/actions/workflows/ci.yml/badge.svg)](https://github.com/BlackFoxgamingstudio/sales-agent-rag/actions/workflows/ci.yml)
 [![n8n Integration](https://img.shields.io/badge/n8n-workflow_ready-orange.svg)](n8n/workflow.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 

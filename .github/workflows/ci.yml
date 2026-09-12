@@ -62,3 +62,29 @@ jobs:
           pip install bandit 2>/dev/null || true
           bandit -r src/ -ll 2>/dev/null || echo "Security scan skipped"
         continue-on-error: true
+
+  publish:
+    name: Publish to GHCR
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime
+          push: true
+          tags: |
+            ghcr.io/blackfoxgamingstudio/sales-agent-rag:latest
+            ghcr.io/blackfoxgamingstudio/sales-agent-rag:${{ github.sha }}
