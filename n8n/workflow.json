@@ -1,0 +1,56 @@
+{
+  "name": "SBB - Sovereign Sales Agent Rag Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sales-agent-rag-trigger",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Inbound Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8802/api/v1/execute",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ \"action\": \"n8n_pipeline_exec\", \"payload\": $json }) }}",
+        "options": {}
+      },
+      "id": "sovereign-node",
+      "name": "Execute Sovereign Sales Agent Rag",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        480,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Inbound Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute Sovereign Sales Agent Rag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

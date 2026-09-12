@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sovereign-sales-agent-rag"
+version = "1.0.0"
+description = "Autonomous sales qualification and B2B outreach agent. Integrates Swagger API specifications with ChromaDB vector search (`apiragbuiderv2.py`) to answer complex technical sales questions and qualify inbound leads."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Russell Alan Powers", email = "russell@sovereignbizbox.io"}
+]
+keywords = ["sovereign", "conversational ai & sales automation", "microservice", "n8n", "automation"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries"
+]
+dependencies = []
+
+[project.scripts]
+sovereign-sales-agent-rag = "src.cli:main"
